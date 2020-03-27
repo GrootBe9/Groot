@@ -1,0 +1,3 @@
+create database groot;
+ use groot
+create table users (uid int(11) auto_increment primary key, username varchar(20), password varchar(100), email varchar(50));
