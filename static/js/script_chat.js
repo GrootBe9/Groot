@@ -1,7 +1,6 @@
-$(function() {
-  var INDEX = 0; 
+var INDEX = 0; 
   $("#chat-submit").click(function(e) {
-    e.preventDefault();
+   
     var msg = $("#chat-input").val(); 
     if(msg.trim() == ''){
       return false;
@@ -20,10 +19,11 @@ $(function() {
         }
       ];*/
       //After 1000 ms message(response) for chatbot is created
-    setTimeout(function() {      
-      generate_message(msg, 'user');  
-    }, 1000)
+        $.ajax({url: "/chat/",type:"POST", data:{'message':msg}, success: function(result){
+      generate_message(result.message, 'user');  
     
+  }});
+  
   })
   
   function generate_message(msg, type) {
@@ -99,4 +99,3 @@ $(function() {
     $(".chat-box").toggle('scale');
   })
   
-})

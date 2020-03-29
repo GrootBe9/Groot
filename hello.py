@@ -48,10 +48,9 @@ def login():
 @app.route("/chat/",methods=['GET','POST'])
 def chat():
     if request.method=='POST':
-        req_data=request.form.message
+        req_data=request.form['message']
         #message=req_data['message']
-        flash(req_data)
-        return jsonify({'message' : 'Successfully connected!'})
+        return jsonify({'message' : req_data})
     try:
         return render_template("chat.html")
     except Exception as e:
