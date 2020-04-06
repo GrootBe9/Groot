@@ -1,4 +1,10 @@
 var INDEX = 0; 
+/*window.onload = function() {
+  yourFunction(param1, param2);
+};*/
+/*$(document).ready(function() {
+  generate_message('Hi. I\'m groot', 'user');
+});*/
   $("#chat-submit").click(function(e) {
    
     var msg = $("#chat-input").val(); 

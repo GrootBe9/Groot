@@ -257,7 +257,7 @@
   </style>
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="generate_message('Hello', 'user');">
 
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -340,13 +340,13 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
           {%with messages = get_flashed_messages(with_categories=true)%}
-            {%if messages%}
-              {% for category, message in messages %}
-                <div class="alert alert-{{category}}">
-                {{message}}
-                </div>
-              {%endfor%}
-            {%endif%}
+          {%if messages%}
+          {% for category, message in messages %}
+          <div class="alert alert-{{category}}">
+            {{message}}
+          </div>
+          {%endfor%}
+          {%endif%}
           {%endwith%}
           <!-- Page Heading -->
           <!--<h1 class="h3 mb-4 text-gray-800">Blank Page</h1>-->
@@ -357,15 +357,15 @@
 
             </div>
             <div class="chat-input">
-            
-                <div class="input-group">
-                  <input type="text" id="chat-input" placeholder="Send a message..." autocomplete="off" name="message" />
-                  <div class="input-group-btn">
-                    <button  class="chat-submit" id="chat-submit"><i
-                        class="fa fa-paper-plane"></i></button>
-                  </div>
+             <!-- <form method="post">-->
+              <div class="input-group">
+                <input type="text" id="chat-input" placeholder="Send a message..." autocomplete="off" name="message" />
+                <div class="input-group-btn">
+                  <button class="chat-submit" id="chat-submit" type="submit"><i class="fa fa-paper-plane"></i></button>
                 </div>
-                         </div>
+              </div>
+              <!--</form>-->
+            </div>
           </div>
         </div>
         <!-- /.container-fluid -->

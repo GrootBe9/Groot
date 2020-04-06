@@ -1,14 +1,13 @@
 from flask import Flask, render_template, flash, request, url_for, redirect, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
-
+import mainCode 
 app = Flask(__name__)
 # app.secret_key = "super secret key"
 app.config["SECRET_KEY"] = "484064281fc536fe3e27134787b8e13b"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
 db = SQLAlchemy(app)
-
-
+pointer=-1
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True, nullable=False) 
@@ -47,10 +46,13 @@ def login():
 
 @app.route("/chat/",methods=['GET','POST'])
 def chat():
+    global pointer
     if request.method=='POST':
+        pointer=pointer+1
         req_data=request.form['message']
         #message=req_data['message']
-        return jsonify({'message' : req_data})
+        return jsonify({'message' : mainCode.myfunc(req_data,pointer)})
+        #return mainCode.myfunc(req_data)
     try:
         return render_template("chat.html")
     except Exception as e:
