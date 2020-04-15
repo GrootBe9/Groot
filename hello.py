@@ -1,7 +1,7 @@
 from flask import Flask, render_template, flash, request, url_for, redirect, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
-import mainCode 
+import mainCode, model 
 app = Flask(__name__)
 # app.secret_key = "super secret key"
 app.config["SECRET_KEY"] = "484064281fc536fe3e27134787b8e13b"
@@ -50,8 +50,11 @@ def chat():
     if request.method=='POST':
         pointer=pointer+1
         req_data=request.form['message']
+        print(req_data)
+        print("pointer= ", pointer)
         #message=req_data['message']
         return jsonify({'message' : mainCode.myfunc(req_data,pointer)})
+        #return jsonify({'message' : next(model.myfunc(req_data,pointer)) })
         #return mainCode.myfunc(req_data)
     try:
         return render_template("chat.html")
