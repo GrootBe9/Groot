@@ -112,39 +112,42 @@ def greet():
     print(gd[k % 13])
 
 
-def askName(pre):
-    k = random.randint(0, 50)
-    lan = nd[k % 6]
-    if pre == '2':
-        lan = translator.translate(lan, dest='hi')
-        print(lan.text)
-    if pre == '3':
-        lan = translator.translate(lan, dest='mr')
-        print(lan.text)
-    if pre == '1':
-        print(nd[k % 6])
+def askName(pre,pointer):
+    if(pointer==2):
+        k = random.randint(0, 50)
+        lan = nd[k % 6]
+        if (pre == '2'):
+            lan = translator.translate(lan, dest='hi')
+            print(lan.text)
+            return (lan.text)
+        
+        if pre == '3':
+            lan = translator.translate(lan, dest='mr')
+            print(lan.text)
+            return (lan.text)
+        
+        if pre == '1':
+            print(nd[k % 6])
+            return(nd[k%6])
 
-    inp = input()
-    return inp
 
-
-def askAge(pre):
-
-    k = random.randint(0, 50)
-    lan = ad[k % 6]
+def askAge(pre,pointer):
+    if pointer==3 :
+        k = random.randint(0, 50)
+        lan = ad[k % 6]
     #print('PLease enter your age - ')
 
-    if pre == '2':
-        lan = translator.translate(lan, dest='hi')
-        print(lan.text)
-    if pre == '3':
-        lan = translator.translate(lan, dest='mr')
-        print(lan.text)
-    if pre == '1':
-        print(ad[k % 6])
-
-    inp = input()
-    return inp
+        if pre == '2':
+            lan = translator.translate(lan, dest='hi')
+            print(lan.text)
+            return(lan.text)
+        if pre == '3':
+            lan = translator.translate(lan, dest='mr')
+            print(lan.text)
+            return(lan.text)
+        if pre == '1':
+            print(ad[k % 6])
+            return(ad[k % 6])
 
 
 def getAge(text):
@@ -163,15 +166,16 @@ def askGender(pre):
     if pre == '2':
         lan = translator.translate('Are you a Male or a Female?', dest='hi')
         print(lan.text)
+        return(lan.text)
     if pre == '3':
         lan = translator.translate('Are you a Male or a Female?', dest='mr')
         print(lan.text)
+        return(lan.text)
     if pre == '1':
         print('Are you a Male or a Female?')
+        return('Are you a Male or a Female?')
 
-    inp = input()
-    return inp
-
+   
 
 def sorry(pre):
     if pre == '2':
@@ -201,38 +205,34 @@ def getGender(text):
         return gender
 
 
-def smokeAndAlc(pre):
+def smokeAndAlc(pre,pointer):
 
-    if pre == '2':
-        ans1 = translator.translate('Do you smoke?', dest='hi')
-        print(ans1.text)
-    if pre == '3':
-        ans1 = translator.translate('Do you smoke?', dest='mr')
-        print(ans1.text)
-    if pre == '1':
-        print('Do you smoke?')
+    if pointer==5:
+        if pre == '2':
+            ans1 = translator.translate('Do you smoke?', dest='hi')
+            print(ans1.text)
+            return(ans1.text)
+        if pre == '3':
+            ans1 = translator.translate('Do you smoke?', dest='mr')
+            print(ans1.text)
+            return(ans1.text)
+        if pre == '1':
+            print('Do you smoke?')
+            return('Do you smoke?')
 
-    inp1 = input()
-    res1 = 0
-    for i in inp1:
-        stem = stemming(i)
-        if 'yes' in stem or 'yea' in stem or 'yeah' in stem:
-            res1 = 1
-    if pre == '2':
-        ans1 = translator.translate('Do you consume alcohol?', dest='hi')
-        print(ans1.text)
-    if pre == '3':
-        ans1 = translator.translate('Do you consume alcohol?', dest='mr')
-        print(ans1.text)
-    if pre == '1':
-        print('Do you consume alcohol?')
-    inp2 = input()
-    res2 = 0
-    for i in inp2:
-        stem = stemming(i)
-        if 'yes' in stem or 'yea' in stem or 'yeah' in stem:
-            res2 = 1
-    return (res1*10)+res2
+    if pointer==6:
+       
+        if pre == '2':
+            ans1 = translator.translate('Do you consume alcohol?', dest='hi')
+            print(ans1.text)
+            return(ans1.text)
+        if pre == '3':
+            ans1 = translator.translate('Do you consume alcohol?', dest='mr')
+            print(ans1.text)
+            return(ans1.text)
+        if pre == '1':
+            print('Do you consume alcohol?')
+            return('Do you consume alcohol?')
 
 
 def extDisease():
@@ -254,11 +254,8 @@ def extDisease():
         return 'Nothing Severe'
 
 
-def getSymptoms(pre):
-    inp = input()
-    filtered = stopWords(inp)
-    stemmed = stemming(filtered)
-    filt = stopWords(inp)
+def getSymptoms(pre,filt):
+    
 
     # compare input with csv file with filtered sentence
     i1 = i2 = i3 = 0
@@ -281,21 +278,45 @@ def getSymptoms(pre):
             max3 = diff
             i3 = i
 
+
+
     if(pre == '2'):
-        temp = translator.translate('Diagnosed Diseases are:', dest='hi')
+        temp = translator.translate('Diagnosed Diseases are : ', dest='hi')
         print(temp.text)
+        if(i1 != i2 != i3):
+            print(dis[i1])
+            print(dis[i2])
+            print(dis[i3])
+            return(temp.text + dis[i1] +' '+ dis[i2] +' '+ dis[i3])
+        else:
+            print(dis[i1])
+            return(temp.text + dis[i1])
+
+
     if(pre == '3'):
-        temp = translator.translate('Diagnosed Diseases are:', dest='mr')
+        temp = translator.translate('Diagnosed Diseases are : ', dest='mr')
         print(temp.text)
+        if(i1 != i2 != i3):
+            print(dis[i1])
+            print(dis[i2])
+            print(dis[i3])
+            return(temp.text + dis[i1] + ' '+ dis[i2] +' '+ dis[i3])
+        else:
+            print(dis[i1])
+            return(temp.text + dis[i1])
+
+
     if(pre == '1'):
         print('Diagnosed Diseases are:')
-
-    if(i1 != i2 != i3):
-        print(dis[i1])
-        print(dis[i2])
-        print(dis[i3])
-    else:
-        print(dis[i1])
+        if(i1 != i2 != i3):
+            print(dis[i1])
+            print(dis[i2])
+            print(dis[i3])
+            return('Diagnosed Diseases might be: ' + dis[i1] +' '+ dis[i2] +' '+ dis[i3])
+        else:
+            print(dis[i1])
+            return('Diagnosed Diseases might be: ' + dis[i1])
+    
 
 
 translator = Translator()
@@ -306,6 +327,9 @@ def myfunc(inp, pointer):
     translator = Translator()
     global pre
     global language
+    global opt
+    global res1
+    global res2
     # Starting the conversation
     if pointer == 0:
         print('Which language would you prefer - 1.English 2.Hindi 3.Marathi')
@@ -349,9 +373,9 @@ def myfunc(inp, pointer):
             print('Do you want 1. Medical information or 2. Check your symptoms:')
             return 'Do you want 1. Medical information or 2. Check your symptoms:'
 
-    if pointer == 2 or pointer == 3:
+    if pointer == 2:
         imp = inp
-
+        opt = imp
         if pointer == 2:
             if(imp == '1'):
                 if(language == '2'):
@@ -370,47 +394,112 @@ def myfunc(inp, pointer):
                     print('Name a medical term you need information about - ')
                     return 'Name a medical term you need information about - '
 
+            
+            ######################################################################################################################
+            
+            
             elif imp == '2':
-                ufName = askName(pre)
-                name = getName(ufName)
-                ufAge = askAge(pre)
-                age = getAge(ufAge)
-                ufGender = askGender(pre)
-                gender = getGender(ufGender)
-                while gender == 0:
-                    sorry(pre)
-                    ufGender = askGender(pre)
-                    gender = getGender(ufGender)
+            
+                if(pointer==2 ):
+                    ufName = askName(language,pointer)
+                    return ufName
 
-                sa = smokeAndAlc(pre)
-                #sa = (smoke*10)+alc
-                #existingDiseases = extDisease()
 
-                print('Okay {} '.format(name[0]))
-                print('Can you please describe your Symptoms')
-                Sym = getSymptoms(pre)
+    if pointer==3 and opt == '2':
+        ufName = inp
+        print('Done taking the name')
+        ufAge = askAge(language,pointer)
+        return ufAge
 
-        if pointer == 3:
-            if(language == '2'):
-                inp1 = inp
-                text1 = translator.translate(inp1)
-                print(text1.text)
-                # return text1.text
-                final = (translator.translate(wikipedia.summary(
-                    text1.text, sentences=2), dest='hi'))
-                print(final.text)
-                return final.text
+    if pointer==4:
+        ufAge = inp
+        print('Done taking the age')
+        ufGender = askGender(language)
+        return ufGender
 
-            elif(language == '3'):
-                inp1 = inp
-                text1 = translator.translate(inp1)
-                print(text1.text)
-                final = (translator.translate(wikipedia.summary(
-                    text1.text, sentences=2), dest='mr'))
-                print(final.text)
-                return final.text
+    if pointer==5:
+        ufGender=inp
+        sa = smokeAndAlc(language,pointer)
+        return sa
 
-            elif(pre == '1'):
-                inp1 = inp
-                print(wikipedia.summary(inp1, sentences=2))
-                return wikipedia.summary(inp1, sentences=2)
+    if pointer==6:
+      
+        inp1 = inp
+        for i in inp1:
+            stem = stemming(i)
+            if 'yes' in stem or 'yea' in stem or 'yeah' in stem:
+                res1 = 1
+        
+        sa = smokeAndAlc(language,pointer)
+        return sa
+
+    calc = 0
+
+    if pointer==7:
+        res2=0
+        inp2 = inp
+        for i in inp2:
+            stem = stemming(i)
+            if 'yes' in stem or 'yea' in stem or 'yeah' in stem:
+                res2 = 1
+            if language=='2':
+                greet1 = translator.translate('Okay. Can you please describe your symptoms?', dest='hi')
+                print(greet1.text)
+                # return greet1.text
+                return greet1.text
+
+
+            if language=='3':
+                greet1 = translator.translate('Okay. Can you please describe your symptoms?', dest='mr')
+                print(greet1.text)
+                # return greet1.text
+                return greet1.text
+
+            else:
+                return('Okay. Can you please describe your symptoms?')
+
+
+    #calc = (res1*10)+res2
+
+    if pointer==8:
+
+        filtered = stopWords(inp)
+        stemmed = stemming(filtered)
+        filt = stopWords(inp)
+        Sym = getSymptoms(language,filt)    
+        return Sym
+
+
+
+            #########################################################################################################################
+
+
+    if pointer == 3 and opt == '1':
+        if(language == '2'):
+            inp1 = inp
+            text1 = translator.translate(inp1)
+            print(text1.text)
+            # return text1.text
+            final = (translator.translate(wikipedia.summary(
+            text1.text, sentences=2), dest='hi'))
+            print(final.text)
+            return final.text
+
+        elif(language == '3'):
+            inp1 = inp
+            text1 = translator.translate(inp1)
+            print(text1.text)
+            final = (translator.translate(wikipedia.summary(
+            text1.text, sentences=2), dest='mr'))
+            print(final.text)
+            return final.text
+
+        elif(pre == '1'):
+            inp1 = inp
+            print(wikipedia.summary(inp1, sentences=2))
+            return wikipedia.summary(inp1, sentences=2)
+                
+                
+                
+                
+                
